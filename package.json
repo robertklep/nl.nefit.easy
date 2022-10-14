@@ -1,0 +1,19 @@
+{
+  "name": "nl.nefit.easy",
+  "version": "3.3.2",
+  "description": "Control your Nefit Easy thermostat with Homey!",
+  "main": "app.js",
+  "dependencies": {
+    "nefit-easy-commands": "^3.0.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertklep/nl.nefit.easy.git"
+  },
+  "author": "Robert Klep <robert@klep.name>",
+  "bugs": {
+    "url": "https://github.com/robertklep/nl.nefit.easy/issues"
+  },
+  "homepage": "https://github.com/robertklep/nl.nefit.easy#readme"
+}

@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="./vue.min.js"></script>
+    <style>
+      #nefit-easy input {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        height: 40px;
+        box-sizing: border-box;
+        padding: 0 10px 0 10px;
+        font-size: 14px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        transition: all .3s;
+        margin-bottom: 3px;
+        font-family: "Roboto";
+        font-weight: 300;
+      }
+
+      #nefit-easy .error {
+        border: 1px solid;
+        border-radius: 3px;
+        margin: 10px 0px;
+        padding: 15px 10px 15px 15px;
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        color: #D8000C;
+        background-color: #FFBABA;
+      }
+
+      #nefit-easy .center-div {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+      }
+
+      #nefit-easy button {
+        height: 30px;
+        line-height: 30px;
+        padding: 0 15px;
+        font-size: 12px;
+        background-color: #4caf50;
+        color: #fff;
+        border-color: #4caf50;
+        border-radius: 4px;
+      }
+
+      #nefit-easy button:disabled {
+        background-color: #ccc;
+        border-color: #ccc;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="nefit-easy">
+      <div id="content" v-show="! isLoading">
+        <p data-i18n="pair.setup_intro"></p>
+
+        <div id="errorText" class="error" v-show="isError">
+          <p style="padding-bottom:0;" data-i18n="pair.setup_failed"></p>
+          <p style="padding-bottom:0; margin-top: 6px; font-style: italic;" data-i18n="pair.setup_failed_hint"></p>
+        </div>
+
+        <input @keyup="validateInput" v-model.trim="serialNumber" :placeholder="Homey.__('pair.serialnumber')" type="text"><br>
+        <input @keyup="validateInput" v-model.trim="accessKey"    :placeholder="Homey.__('pair.accesskey')"    type="text"><br>
+        <input @keyup="validateInput" v-model.trim="password"     :placeholder="Homey.__('pair.password')"     type="password"><br>
+
+        <button @click="submitDevice" v-bind:disabled="!isValidInput" id="submitButton" type="submit" class="button" style="margin-top:3px;" data-i18n="pair.add">Add</button>
+      </div>
+      <div id="loading" v-show="isLoading" class="center-div">
+        <div class="fa fa-cog fa-spin fa-5x"></div>
+      </div>
+    </div>
+    <script>
+      Homey.setTitle(Homey.__('pair.setup'));
+      new Vue({
+        el   : '#nefit-easy',
+        data : {
+          isError      : false,
+          isValidInput : false,
+          isLoading    : false,
+          serialNumber : '',
+          accessKey    : '',
+          password     : '',
+        },
+        watch : {
+          serialNumber(value) {
+            this.serialNumber = value.replace(/\s/g, '');
+          },
+          accessKey(value) {
+            this.accessKey = value.replace(/\s/g, '');
+          }
+        },
+        methods : {
+          submitDevice() {
+            if (this.password.length > 10) {
+              return Homey.alert(Homey.__('pair.password_too_long'));
+            }
+            this.isLoading = true;
+            Homey.emit('validate_device', {
+              serialNumber : this.serialNumber,
+              accessKey    : this.accessKey,
+              password     : this.password,
+            }, (err, device) => {
+              this.isLoading = false;
+              if (err || ! device) {
+                console.error('validation error', err || 'no device returned from backend');
+                this.isError = true;
+                return;
+              }
+              this.isLoading = true;
+              Homey.addDevice(device, function (err, result) {
+                this.isLoading = false;
+                if (err) {
+                  console.error('error adding device', err);
+                  this.isError = true;
+                  return;
+                }
+                // Success.
+                Homey.showView('device-added');
+              });
+            });
+          },
+          validateInput() {
+            this.isValidInput = this.serialNumber.length && this.accessKey.length && this.password.length;
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
