@@ -2,6 +2,9 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script>
+      console.log('starting html');
+    </script>
     <script src="./vue.min.js"></script>
     <style>
       #nefit-easy input {
@@ -109,9 +112,9 @@
               serialNumber : this.serialNumber,
               accessKey    : this.accessKey,
               password     : this.password,
-            }, (err, device) => {
+            }).then(device => {
               this.isLoading = false;
-              if (err || ! device) {
+              if (! device) {
                 console.error('validation error', err || 'no device returned from backend');
                 this.isError = true;
                 return;
@@ -127,6 +130,10 @@
                 // Success.
                 Homey.showView('device-added');
               });
+            }).catch(err => {
+              console.error('validation error', err || 'no device returned from backend');
+              this.isLoading = false;
+              this.isError = true;
             });
           },
           validateInput() {

@@ -2,8 +2,8 @@ const Homey    = require('homey');
 const camelize = s => s.replace(/(_[a-z])/g, m => m[1].toUpperCase());
 
 module.exports = class NefitEasyApp extends Homey.App {
-  onInit() {
-    this.log(`${ Homey.manifest.id } is running...(debug mode ${ Homey.env.DEBUG ? 'on' : 'off' })`);
+  onInit(manifest) {
+    this.homey.log(`${ this.manifest.id } is running...(debug mode ${ Homey.env.DEBUG ? 'on' : 'off' })`);
     if (Homey.env.DEBUG) {
       require('inspector').open(9229, '0.0.0.0');
     }
@@ -16,8 +16,7 @@ module.exports = class NefitEasyApp extends Homey.App {
 
   registerAction(name) {
     const method = camelize(name) + 'Action';
-    new Homey.FlowCardAction(name).register()
-             .registerRunListener(this[method].bind(this));
+    this.homey.flow.getActionCard(name).registerRunListener(this[method].bind(this));
   }
 
   async setClockProgramAction(args, state) {

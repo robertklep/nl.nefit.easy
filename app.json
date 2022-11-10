@@ -1,8 +1,9 @@
 {
   "id": "nl.nefit.easy",
-  "sdk": 2,
-  "version": "3.3.2",
-  "compatibility": ">=1.5.0",
+  "sdk": 3,
+  "version": "4.0.0",
+  "brandColor" : "#000000",
+  "compatibility": ">=5.0.0",
   "athomForumDiscussionId": 6406,
   "homeyCommunityTopicId": 105,
   "name": {
@@ -54,7 +55,8 @@
       "getable": true,
       "setable": false,
       "chartType": "stepLine",
-      "decimals": 1
+      "decimals": 1,
+      "icon" : "/assets/capability-icons/system_pressure.svg"
     },
     "alarm_pressure": {
       "type": "boolean",
@@ -67,7 +69,8 @@
         "nl": "Systeemdruk is te laag/hoog"
       },
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon" : "/assets/capability-icons/system_pressure.svg"
     },
     "clock_programme": {
       "type": "boolean",
@@ -76,7 +79,8 @@
         "nl": "Klokprogramma"
       },
       "getable": true,
-      "setable": true
+      "setable": true,
+      "icon" : "/assets/capability-icons/clock_programme.svg"
     },
     "operating_mode": {
       "type": "enum",
@@ -108,7 +112,8 @@
         }
       ],
       "getable": true,
-      "setable": false
+      "setable": false,
+      "icon" : "/assets/capability-icons/system_pressure.svg"
     },
     "central_heating": {
       "type": "boolean",
@@ -117,7 +122,8 @@
         "nl": "Verwarming"
       },
       "getable": true,
-      "setable": true
+      "setable": true,
+      "icon" : "/assets/capability-icons/central_heating.svg"
     },
     "fireplace_mode": {
       "type": "boolean",
@@ -126,7 +132,8 @@
         "nl": "Openhaard functie"
       },
       "getable": true,
-      "setable": true
+      "setable": true,
+      "icon" : "/assets/capability-icons/fireplace_mode.svg"
     },
     "holiday_mode": {
       "type": "boolean",
@@ -135,7 +142,8 @@
         "nl": "Vakantieprogramma"
       },
       "getable": true,
-      "setable": true
+      "setable": true,
+      "icon" : "/assets/capability-icons/holiday_mode.svg"
     }
   },
   "drivers": [
@@ -224,54 +232,6 @@
             "nl": "Systeemdruk is te laag/hoog"
           }
         }
-      },
-      "mobile": {
-        "components": [
-          {
-            "id": "icon"
-          },
-          {
-            "id": "sensor",
-            "capabilities": [
-              "measure_temperature",
-              "measure_temperature.outdoor",
-              "central_heating",
-              "system_pressure",
-              "clock_programme",
-              "fireplace_mode",
-              "holiday_mode"
-            ],
-            "options": {
-              "icons": {
-                "measure_temperature": "assets/mobile/measure_temperature.svg",
-                "measure_temperature.outdoor": "assets/mobile/outdoor_temperature.svg",
-                "system_pressure": "assets/mobile/system_pressure.svg",
-                "central_heating": "assets/mobile/central_heating.svg",
-                "clock_programme": "assets/mobile/clock_programme.svg",
-                "fireplace_mode": "assets/mobile/fireplace_mode.svg",
-                "holiday_mode": "assets/mobile/holiday_mode.svg"
-              },
-              "central_heating": {
-                "label": {
-                  "true": {
-                    "en": "On",
-                    "nl": "Aan"
-                  },
-                  "false": {
-                    "en": "Off",
-                    "nl": "Uit"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "id": "thermostat",
-            "capabilities": [
-              "target_temperature"
-            ]
-          }
-        ]
       },
       "pair": [
         {
@@ -476,6 +436,10 @@
           "en": "Operating mode !{{matches|doesn't match}}",
           "nl": "Bedrijfsmodus !{{is|is niet}}"
         },
+        "titleFormatted": {
+          "en": "Operating mode !{{matches|doesn't match}} [[mode]]",
+          "nl": "Bedrijfsmodus !{{is|is niet}} [[mode]]"
+        },
         "args": [
           {
             "name": "device",
@@ -519,6 +483,10 @@
           "en" : "Fireplace function",
           "nl" : "Openhaard functie"
         },
+        "titleFormatted" : {
+          "en" : "Fireplace function [[value]]",
+          "nl" : "Openhaard functie [[value]]"
+        },
         "args": [
           {
             "name" : "value",
@@ -553,6 +521,10 @@
           "en" : "Holiday mode",
           "nl" : "Vakantieprogramma"
         },
+        "titleFormatted" : {
+          "en" : "Holiday mode [[value]]",
+          "nl" : "Vakantieprogramma [[value]]"
+        },
         "args": [
           {
             "name" : "value",
@@ -586,6 +558,10 @@
         "title" : {
           "en" : "Clock program",
           "nl" : "Klokprogramma"
+        },
+        "titleFormatted" : {
+          "en" : "Clock program [[value]]",
+          "nl" : "Klokprogramma [[value]]"
         },
         "args": [
           {

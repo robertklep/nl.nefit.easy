@@ -12,23 +12,23 @@ module.exports = class NefitEasyDriver extends Homey.Driver {
 
   registerFlowCards() {
     this._triggers = {
-      [ Capabilities.OPERATING_MODE ] : new Homey.FlowCardTriggerDevice('operating_mode_changed').register(),
-      [ Capabilities.PRESSURE ]       : new Homey.FlowCardTriggerDevice('system_pressure_changed').register(),
-      [ Capabilities.ALARM_PRESSURE ] : new Homey.FlowCardTriggerDevice('alarm_pressure_active').register(),
+      [ Capabilities.OPERATING_MODE ] : this.homey.flow.getDeviceTriggerCard('operating_mode_changed'),
+      [ Capabilities.PRESSURE ]       : this.homey.flow.getDeviceTriggerCard('system_pressure_changed'),
+      [ Capabilities.ALARM_PRESSURE ] : this.homey.flow.getDeviceTriggerCard('alarm_pressure_active'),
     }
 
     this._conditions = {
-      operating_mode_matches : new Homey.FlowCardCondition('operating_mode_matches').register().registerRunListener(( args, state ) => {
-        return Promise.resolve(args.mode === state.value);
+      operating_mode_matches : this.homey.flow.getConditionCard('operating_mode_matches').registerRunListener(async (args, state) => {
+        return args.mode === state.value;
       })
     }
   }
 
-  onPair(socket) {
-    socket.on('validate_device', this.validateDevice.bind(this));
+  onPair(session) {
+    session.setHandler('validate_device', async data => this.validateDevice(data));
   }
 
-  async validateDevice(data, callback) {
+  async validateDevice(data) {
     this.log('validating new device', data);
     // Check and see if we can connect to the backend with the supplied credentials.
     let client;
@@ -36,15 +36,22 @@ module.exports = class NefitEasyDriver extends Homey.Driver {
       client = await Device.prototype.getClient.call(this, data);
     } catch(e) {
       this.log('unable to instantiate client:', e.message);
-      return callback(e);
+      throw e;
     }
 
-    // Check for duplicate.
-    let device = this.getDevice(data);
-    if (device instanceof Homey.Device) {
+    // Check if device was already registered.
+    let alreadyRegistered = false;
+    try {
+      let device = this.getDevice(data);
+      alreadyRegistered = true;
       this.log('device is already registered');
+    } catch(e) {
+      // okay, actually
+    }
+
+    if (alreadyRegistered) {
       client.end();
-      return callback(Error('duplicate'));
+      throw Error('duplicate');
     }
 
     // Retrieve status to see if we can successfully load data from backend.
@@ -56,15 +63,20 @@ module.exports = class NefitEasyDriver extends Homey.Driver {
       // correct.
       if (e instanceof SyntaxError) {
         this.log('invalid credentials');
-        return callback(Error('credentials'));
+        throw Error('credentials');
       }
-      return callback(e);
+      throw e;
     } finally {
       client.end();
     }
 
     // Everything checks out.
-    callback(null, { name : 'Nefit Easy', data, store: { paired_with_app_version: Homey.app.manifest.version } });
+    return {
+      name : 'Nefit Easy',
+      data,
+      store: {
+        paired_with_app_version: this.homey.app.manifest.version
+      }
+    };
   }
-
 }

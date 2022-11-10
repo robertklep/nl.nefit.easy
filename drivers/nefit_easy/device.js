@@ -20,12 +20,12 @@ module.exports = class NefitEasyDevice extends Homey.Device {
     // Capability sniffing to sniff out older SDKv1 devices.
     if (! this.hasCapability(Capabilities.OPERATING_MODE)) {
       this.log('device entry too old, needs to be re-added');
-      await this.setUnavailable(Homey.__('device.too_old'));
+      await this.setUnavailable(this.homey.__('device.too_old'));
       return;
     }
 
     // Instantiate client for this device.
-    await this.setUnavailable(Homey.__('device.connecting'));
+    await this.setUnavailable(this.homey.__('device.connecting'));
     try {
       this.client = await this.getClient(this.settings);
     } catch(e) {
@@ -36,17 +36,17 @@ module.exports = class NefitEasyDevice extends Homey.Device {
     // If device was paired with pre-SDKv2 version force re-pair
     const pairedWithAppVersion = this.getStoreValue(PAIRED_WITH_APP_VERSION);
     if (! pairedWithAppVersion) {
-        return this.setUnavailable(Homey.__('force_repair'));
+      return this.setUnavailable(this.homey.__('force_repair'));
     }
-
-    // Device is available.
-    await this.setAvailable();
 
     // Register capabilities.
     this.registerCapabilities()
 
-    // Get driver.
-    this.driver = await this._getDriver();
+    // Wait for driver to get ready.
+    await this.driver.ready();
+
+    // Device is available.
+    await this.setAvailable();
 
     // Start syncing periodically.
     this.shouldSync = true;
@@ -86,14 +86,6 @@ module.exports = class NefitEasyDevice extends Homey.Device {
     await client.connect();
     this.log('device connected successfully to backend');
     return client;
-  }
-
-  // Get a (ready) instance of the driver.
-  async _getDriver() {
-    return new Promise(resolve => {
-      let driver = this.getDriver();
-      driver.ready(() => resolve(driver));
-    });
   }
 
   // Set a capability value, optionally formatting it.
@@ -277,7 +269,7 @@ module.exports = class NefitEasyDevice extends Homey.Device {
       await this.setAvailable(); // We could update so the device is available.
     } catch(e) {
       this.log('error syncing', e);
-      await this.setUnavailable(Homey.__('device.sync_error') + ': ' + e.message);
+      await this.setUnavailable(this.homey.__('device.sync_error') + ': ' + e.message);
     }
     this.isSyncing = false;
 
@@ -313,7 +305,7 @@ module.exports = class NefitEasyDevice extends Homey.Device {
         await client.status();
       } catch(e) {
         this.log('unable to validate password change');
-        return callback(Homey.__('settings.password'));
+        return callback(this.homey.__('settings.password'));
       } finally {
         client && client.end();
       }
