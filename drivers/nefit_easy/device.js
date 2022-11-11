@@ -296,22 +296,25 @@ module.exports = class NefitEasyDevice extends Homey.Device {
 
   // Called when used changed settings, in which
   // case we need to validate some stuff.
-  async onSettings(oldSettings, newSettings, changes, callback) {
-    // If password has changed, validate client.
-    if (changes.includes('password')) {
-      let client;
+  async onSettings({ oldSettings, newSettings, changedKeys }) {
+    // If credentials have changed, validate client.
+    if (changedKeys.includes('password') || changedKeys.includes('serialNumber') || changedKeys.includes('accessKey')) {
       try {
-        client = await this.getClient(newSettings);
+        var client = await this.getClient(newSettings);
         await client.status();
+        this.client = client;
+        // in case the device was unavailable before due to invalid
+        // credentials, set it to available again and make sure it's
+        // also syncing.
+        this.setAvailable();
+        this.startSyncing();
       } catch(e) {
         this.log('unable to validate password change');
-        return callback(this.homey.__('settings.password'));
-      } finally {
         client && client.end();
+        throw Error(this.homey.__('settings.password'));
       }
     }
     this.settings = Object.assign({}, newSettings);
-    return callback(null, true);
   }
 
 }
