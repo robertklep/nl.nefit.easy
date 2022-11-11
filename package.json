@@ -1,6 +1,6 @@
 {
   "name": "nl.nefit.easy",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Control your Nefit Easy thermostat with Homey!",
   "main": "app.js",
   "dependencies": {
