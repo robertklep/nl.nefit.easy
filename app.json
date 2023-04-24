@@ -26,6 +26,13 @@
       }
     ]
   },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "robertklep"
+      }
+    }
+  },
   "category": "climate",
   "tags" : {
     "en" : [ "thermostat", "nefit", "easy", "heating", "central heating" ],
