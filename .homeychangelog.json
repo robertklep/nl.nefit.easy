@@ -4,5 +4,8 @@
   },
   "4.0.1": {
     "en": "Fixed some issues with settings"
+  },
+  "4.0.2": {
+    "en": "Fix issue with unknown pressure"
   }
 }
