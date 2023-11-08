@@ -135,7 +135,7 @@ module.exports = class NefitEasyDevice extends Homey.Device {
     }
 
     // Update pressure.
-    if (pressure && pressure.unit === 'bar' && pressure.pressure < 200) {
+    if (pressure && pressure.unit === 'bar' && pressure.pressure < 25) {
       this.log('...updating pressure', pressure);
       let value       = pressure.pressure;
       let alarmActive = value < this.settings.pressureTooLow || value > this.settings.pressureTooHigh;
