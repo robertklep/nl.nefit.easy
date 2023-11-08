@@ -1,7 +1,7 @@
 {
   "id": "nl.nefit.easy",
   "sdk": 3,
-  "version": "4.0.2",
+  "version": "4.0.3",
   "brandColor" : "#000000",
   "compatibility": ">=5.0.0",
   "athomForumDiscussionId": 6406,
