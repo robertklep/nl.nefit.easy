@@ -10,5 +10,8 @@
   },
   "4.0.3": {
     "en": "Fixing wrong pressure check in 4.0.2"
+  },
+  "4.0.4": {
+    "en": "Changed step size for target_temperature"
   }
 }
