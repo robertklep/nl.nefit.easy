@@ -180,6 +180,7 @@
       ],
       "capabilitiesOptions": {
         "target_temperature": {
+          "step" : 0.1,
           "title": {
             "en": "Target temperature",
             "nl": "Ingestelde temperatuur"
