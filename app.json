@@ -179,6 +179,9 @@
         "holiday_mode"
       ],
       "capabilitiesOptions": {
+        "thermostat_mode" : {
+          "uiComponent" : null
+        },
         "target_temperature": {
           "step" : 0.1,
           "title": {
@@ -229,6 +232,7 @@
           }
         },
         "central_heating": {
+          "uiComponent" : null,
           "title": {
             "en": "Central Heating",
             "nl": "Verwarming"
