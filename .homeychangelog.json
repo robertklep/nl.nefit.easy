@@ -13,5 +13,8 @@
   },
   "4.0.4": {
     "en": "Changed step size for target_temperature"
+  },
+  "4.0.5": {
+    "en": "Removed thermostat mode and central heating capability from UI"
   }
 }
