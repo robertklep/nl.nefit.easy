@@ -10,6 +10,7 @@
     "setup_failed": "Homey konnte Ihr Nefit Easy nicht finden, oder das Gerät wurde bereits hinzugefügt. Bitte stellen Sie sicher dass die eingegebenen Zugangsdaten richtig sind und versuchen Sie es erneut.",
     "setup_failed_hint": "Hinweis: Wenn Sie sich nicht mehr an ihre Zugangsdaten erinnern können, schauen Sie auf die Verpackung des Nefit Easy Handbuchs.",
     "setup_succeeded": "Ihr Nefit Easy wurde erfolgreich hinzugefügt!",
+    "setup_done": "Fenster schließen",
     "settings": "Einstellungen",
     "serialnumber": "Seriennummer",
     "accesskey": "Zugangsschlüssel",

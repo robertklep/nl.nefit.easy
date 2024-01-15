@@ -2,6 +2,10 @@
 <html>
   <head>
     <title></title>
+    <script src='homey-pairing-mock.js'></script>
+    <script>
+      Homey.loadStyleLibrary('http://192-168-23-9.homey.homeylocal.com');
+    </script>
   </head>
   <body>
     <div style="margin: 0 auto; width: 250px; margin-top: 8%;">
@@ -10,8 +14,9 @@
     <div style="margin-top: 15px; text-align: center;">
       <p data-i18n="pair.setup_succeeded"></p>
     </div>
+    <button class='homey-button-primary-full' onclick='Homey.done()' data-i18n='pair.setup_done'></button>
     <script>
-      Homey.setTitle(__('pair.done'));
+      Homey.setTitle(Homey.__('pair.done'));
     </script>
   </body>
 </html>
