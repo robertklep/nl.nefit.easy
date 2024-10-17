@@ -19,5 +19,8 @@
   },
   "4.0.6": {
     "en": "Added close button to final pairing window"
+  },
+  "4.0.7": {
+    "en": "Removed \"thermostat_mode\" capability"
   }
 }
