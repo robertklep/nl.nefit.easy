@@ -24,6 +24,11 @@ module.exports = class NefitEasyDevice extends Homey.Device {
       return;
     }
 
+    // Remove `thermostat_mode` capability (not used anymore since v4.0.7)
+    if (this.hasCapability('thermostat_mode')) {
+      await this.removeCapability('thermostat_mode').catch(e => this.error(e));
+    }
+
     // Instantiate client for this device.
     await this.setUnavailable(this.homey.__('device.connecting'));
     try {
@@ -123,10 +128,6 @@ module.exports = class NefitEasyDevice extends Homey.Device {
         this.setValue(Capabilities.INDOOR_TEMP,     status['in house temp']),
         this.setValue(Capabilities.OUTDOOR_TEMP,    status['outdoor temp']),
         this.setValue(Capabilities.TARGET_TEMP,     temp),
-        this.setValue(Capabilities.THERMOSTAT_MODE, {
-          'central heating' : 'heat',
-          'hot water'       : 'heat', // hmm...
-        }[status['boiler indicator']] || 'off'),
       ]);
     }
 

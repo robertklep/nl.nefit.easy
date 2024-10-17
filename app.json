@@ -171,7 +171,6 @@
         "measure_temperature.outdoor",
         "clock_programme",
         "operating_mode",
-        "thermostat_mode",
         "central_heating",
         "system_pressure",
         "alarm_pressure",
@@ -179,9 +178,6 @@
         "holiday_mode"
       ],
       "capabilitiesOptions": {
-        "thermostat_mode" : {
-          "uiComponent" : null
-        },
         "target_temperature": {
           "step" : 0.1,
           "title": {
