@@ -643,6 +643,44 @@
             "filter": "driver_id=nefit_easy"
           }
         ]
+      },
+      {
+        "id" : "set_shower_timer",
+        "title" : {
+          "en" : "Shower timer",
+          "nl" : "Douche timer"
+        },
+        "titleFormatted" : {
+          "en" : "Set shower timer [[value]]",
+          "nl" : "Zet douche timer [[value]]"
+        },
+        "args" : [
+          {
+            "name" : "value",
+            "type" : "dropdown",
+            "values" : [
+              {
+                "id" : "on",
+                "label" : {
+                  "en" : "On",
+                  "nl" : "Aan"
+                }
+              },
+              {
+                "id" : "off",
+                "label" : {
+                  "en" : "Off",
+                  "nl" : "Uit"
+                }
+              }
+            ]
+          },
+          {
+            "name" : "device",
+            "type" : "device",
+            "filter" : "driver_id=nefit_easy"
+          }
+        ]
       }
     ]
   }
