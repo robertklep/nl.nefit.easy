@@ -278,14 +278,14 @@ module.exports = class NefitEasyDevice extends Homey.Device {
       this.log('(value matches current, not updating)');
       return true;
     }
-    
-    // Timer state changed, trigger flow card
-    this.driver._triggers[Capabilities.SHOWER_TIMER].trigger(this, [ Capabilities.SHOWER_TIMER ]);
 
     return this.client.setShowerTimer(value).then(s => {
       this.log('...status:', s.status);
       if (s.status === 'ok') {
-        return this.setValue(Capabilities.SHOWER_TIMER, value);
+        this.setValue(Capabilities.SHOWER_TIMER, value);
+        // Timer state changed, trigger flow card
+        this.driver._triggers[Capabilities.SHOWER_TIMER].trigger(this, [ Capabilities.SHOWER_TIMER ]);
+        return true;
       }
     });
   }

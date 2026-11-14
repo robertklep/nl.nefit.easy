@@ -513,6 +513,20 @@
             ]
           }
         ]
+      },
+      {
+        "id": "shower_timer_is_active",
+        "title": {
+          "en": "Shower timer !{{is|isn't}} active",
+          "nl": "Douche timer !{{is|is niet}} aan"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=nefit_easy"
+          }
+        ]
       }
     ],
     "actions" : [
