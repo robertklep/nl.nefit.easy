@@ -13,6 +13,7 @@ module.exports = class NefitEasyApp extends Homey.App {
     this.registerAction('set_fireplace_mode');
     this.registerAction('set_holiday_mode');
     this.registerAction('set_shower_timer');
+    this.registerAction('set_shower_time');
   }
 
   registerAction(name) {
@@ -34,5 +35,9 @@ module.exports = class NefitEasyApp extends Homey.App {
 
   async setShowerTimerAction(args, state) {
     return args.device.onSetShowerTimer({ shower_timer : args.value === 'on' });
+  }
+
+  async setShowerTimeAction(args, state) {
+    return args.device.onSetShowerTime({ shower_time : args.value });
   }
 }

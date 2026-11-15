@@ -85,6 +85,7 @@ module.exports = class NefitEasyDevice extends Homey.Device {
     this.registerMultipleCapabilityListener([ Capabilities.FIREPLACE_MODE ],  this.onSetFireplaceMode    .bind(this), DEBOUNCE_RATE);
     this.registerMultipleCapabilityListener([ Capabilities.HOLIDAY_MODE ],    this.onSetHolidayMode      .bind(this), DEBOUNCE_RATE);
     this.registerMultipleCapabilityListener([ Capabilities.SHOWER_TIMER ],    this.onSetShowerTimer      .bind(this), DEBOUNCE_RATE);
+    this.registerMultipleCapabilityListener([ Capabilities.SHOWER_TIME ],     this.onSetShowerTime       .bind(this), DEBOUNCE_RATE);
   }
 
   // Get a (connected) instance of the Nefit Easy client.
@@ -288,6 +289,19 @@ module.exports = class NefitEasyDevice extends Homey.Device {
         return true;
       }
     });
+  }
+
+  // Set shower time.
+  async onSetShowerTime(data, opts) {
+    let value = data[Capabilities.SHOWER_TIME];
+    this.log('Setting shower time to ', value, ' minutes');
+
+    return this.client.setShowerTime(value).then(s => {
+      this.log('...status',s.status);
+      if (s.status === 'ok') {
+        return true;
+      }
+    })
   }
 
   async startSyncing() {

@@ -16,4 +16,8 @@ module.exports = class NefitEasyClient extends NefitEasyCommands {
   setShowerTimer(value) {
     return this.put('/dhwCircuits/dhwA/extraDhw/status', { value : value ? 'on' : 'off' });
   }
+
+  setShowerTime(value) {
+    return this.put('/dhwCircuits/dhwA/extraDhw/duration', { value });
+  }
 };

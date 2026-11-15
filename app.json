@@ -681,6 +681,37 @@
             "filter" : "driver_id=nefit_easy"
           }
         ]
+      },
+      {
+        "id" : "set_shower_time",
+        "title" : {
+          "en" : "Shower time",
+          "nl" : "Douche tijd"
+        },
+        "titleFormatted" : {
+          "en" : "Set time of shower timer to [[value]]",
+          "nl" : "Zet de douche timer op [[value]]"
+        },
+        "args" : [
+          {
+            "name" : "value",
+            "type" : "range",
+            "title" : {
+              "en" : "time duration",
+              "nl" : "tijdsduur"
+            },
+            "min" : 6,
+            "max" : 60,
+            "step" : 1,
+            "label" : "min",
+            "labelDecimals": 0
+          },
+          {
+            "name" : "device",
+            "type" : "device",
+            "filter" : "driver_id=nefit_easy"
+          }
+        ]
       }
     ]
   }
