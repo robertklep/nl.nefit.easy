@@ -465,6 +465,16 @@
             "type": "device",
             "filter": "driver_id=nefit_easy"
           }
+        ],
+        "tokens": [
+          {
+            "name": "state",
+            "type": "string",
+            "title": {
+              "en": "State",
+              "nl": "Status"
+            }
+          }
         ]
       }
     ],
