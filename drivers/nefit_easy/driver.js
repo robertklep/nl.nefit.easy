@@ -15,11 +15,15 @@ module.exports = class NefitEasyDriver extends Homey.Driver {
       [ Capabilities.OPERATING_MODE ] : this.homey.flow.getDeviceTriggerCard('operating_mode_changed'),
       [ Capabilities.PRESSURE ]       : this.homey.flow.getDeviceTriggerCard('system_pressure_changed'),
       [ Capabilities.ALARM_PRESSURE ] : this.homey.flow.getDeviceTriggerCard('alarm_pressure_active'),
+      [ Capabilities.SHOWER_TIMER ]   : this.homey.flow.getDeviceTriggerCard('shower_timer_changed'),
     }
 
     this._conditions = {
       operating_mode_matches : this.homey.flow.getConditionCard('operating_mode_matches').registerRunListener(async (args, state) => {
         return args.mode === state.value;
+      }),
+      shower_timer_is_active : this.homey.flow.getConditionCard('shower_timer_is_active').registerRunListener(async (args, state) => {
+        return args.device.getCapabilityValue(Capabilities.SHOWER_TIMER);
       })
     }
   }
