@@ -22,5 +22,8 @@
   },
   "4.0.7": {
     "en": "Removed \"thermostat_mode\" capability"
+  },
+  "4.1.0": {
+    "en": "Shower timer support"
   }
 }
