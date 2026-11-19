@@ -146,7 +146,7 @@ module.exports = class NefitEasyDevice extends Homey.Device {
     if (timerStatus) {
       if ((timerStatus.value === "on") !== this.getCapabilityValue(Capabilities.SHOWER_TIMER)) {
         // Timer state changed, update value and trigger flow card
-        this.setValue(Capabilities.SHOWER_TIMER, timerStatus.value === 'on');
+        await this.setValue(Capabilities.SHOWER_TIMER, timerStatus.value === 'on');
         this.driver._triggers[Capabilities.SHOWER_TIMER].trigger(this, { state : timerStatus.value });
       }
     }
@@ -280,15 +280,15 @@ module.exports = class NefitEasyDevice extends Homey.Device {
       return true;
     }
 
-    return this.client.setShowerTimer(value).then(s => {
-      this.log('...status:', s.status);
-      if (s.status === 'ok') {
-        this.setValue(Capabilities.SHOWER_TIMER, value);
-        // Timer state changed, trigger flow card
-        this.driver._triggers[Capabilities.SHOWER_TIMER].trigger(this, { state : value ? 'on' : 'off' });
-        return true;
-      }
-    });
+    let s = await this.client.setShowerTimer(value);
+    this.log('...status:', s.status);
+    if (s.status === 'ok') {
+      await this.setValue(Capabilities.SHOWER_TIMER, value);
+      // Timer state changed, trigger flow card
+      this.driver._triggers[Capabilities.SHOWER_TIMER].trigger(this, { state : value ? 'on' : 'off' });
+      return true;
+    }
+    return false;
   }
 
   // Set shower time.
