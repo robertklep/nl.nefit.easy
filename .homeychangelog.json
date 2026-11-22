@@ -25,5 +25,8 @@
   },
   "4.1.0": {
     "en": "Shower timer support"
+  },
+  "4.1.1": {
+    "en": "Fixes issue #3"
   }
 }
